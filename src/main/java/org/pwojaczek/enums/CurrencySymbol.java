@@ -99,6 +99,7 @@ public enum CurrencySymbol {
     MMK,
     MNT,
     MOP,
+    MRU,
     MUR,
     MVR,
     MWK,

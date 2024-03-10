@@ -1,4 +1,4 @@
-package org.pwojaczek.fixer.responses;
+package org.pwojaczek.fixer.responses.timeseries;
 
 import com.google.gson.annotations.SerializedName;
 import org.pwojaczek.enums.CurrencySymbol;
@@ -6,7 +6,7 @@ import org.pwojaczek.enums.CurrencySymbol;
 import java.time.LocalDate;
 import java.util.Map;
 
-public class ResFixerData {
+public class ResTimeseriesData {
     private boolean success;
     private boolean timeseries;
     @SerializedName("start_date")
