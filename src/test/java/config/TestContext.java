@@ -11,16 +11,21 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.pwojaczek.adapters.LocalDateTypeAdapter;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Properties;
 
 public class TestContext {
 
-    private static final String URL = "https://api.apilayer.com/fixer";
-
+    private static final String PROPERTIES_PATH = "src/test/resources/config.properties";
     private static final ObjectMapperConfig config = createMapperConfig();
+    private static final Properties properties = initProperties();
+
+    private RequestSpecification requestSpecification;
+    private Response response;
 
     private static ObjectMapperConfig createMapperConfig() {
-        System.out.println("new mapperConfig");
         return new ObjectMapperConfig(ObjectMapperType.GSON)
                 .gsonObjectMapperFactory(
                         (type, s) -> new GsonBuilder()
@@ -28,13 +33,19 @@ public class TestContext {
                                 .create());
     }
 
-
-    private RequestSpecification requestSpecification;
-    private Response response;
+    private static Properties initProperties() {
+        Properties props = new Properties();
+        try {
+            props.load(new FileInputStream(PROPERTIES_PATH));
+            return props;
+        } catch (IOException e) {
+            throw new RuntimeException("Error while opening config properties", e);
+        }
+    }
 
     public RequestSpecification createRequestSpecification(String apiKey) {
         RequestSpecification requestSpecification1 = new RequestSpecBuilder()
-                .setBaseUri(URL)
+                .setBaseUri(getProperty("base_url"))
                 .log(LogDetail.ALL)
                 .addHeader("apikey", apiKey)
                 .setConfig(RestAssuredConfig.config().objectMapperConfig(config))
@@ -54,4 +65,10 @@ public class TestContext {
     public void setResponse(Response response) {
         this.response = response;
     }
+
+    public static String getProperty(String property) {
+        return properties.getProperty(property);
+    }
+
+
 }
