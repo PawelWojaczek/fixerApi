@@ -21,3 +21,4 @@
 
 ## Known bugs
 1. Due to bug in Cucumber plugin, steps with annotation ParameterType may be seen as not implemented - only visual, tests with those steps work fine.
+2. In [fluctuation.feature](src/test/resources/features/fluctuation.feature), when no dates are specified - server returns data for current day. In the documentation, the **start_date** and **end_date** parameters are mandatory. That's a bug! 

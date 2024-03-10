@@ -13,6 +13,7 @@ import org.pwojaczek.enums.CurrencySymbol;
 import org.pwojaczek.fixer.responses.ResFixerError;
 import org.pwojaczek.fixer.responses.interfaces.ResGenericBase;
 import org.pwojaczek.fixer.responses.interfaces.ResGenericRates;
+import org.pwojaczek.fixer.responses.interfaces.ResGenericTimeFrame;
 import org.pwojaczek.fixer.responses.objects.FixerErrorDetails;
 
 import java.time.LocalDate;
@@ -136,6 +137,13 @@ public class CommonSteps extends StepsBase {
         Map<CurrencySymbol, Double> rates = resGenericRates.getRates();
         Assertions.assertEquals(rates.size(), symbolList.size());
         Assertions.assertEquals(symbolList, rates.keySet().stream().toList());
+    }
+
+    @Then("Response contains data for dates between {date} and {date}")
+    public void responseContainsDataForSpecifiedDates(LocalDate startDate, LocalDate endDate) {
+        ResGenericTimeFrame timeFrameData = getResponseObject();
+        Assertions.assertEquals(timeFrameData.getStartDate(), startDate);
+        Assertions.assertEquals(timeFrameData.getEndDate(), endDate);
     }
 
 }
