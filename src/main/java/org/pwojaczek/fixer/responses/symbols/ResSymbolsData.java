@@ -4,6 +4,7 @@ import java.util.Map;
 
 public class ResSymbolsData {
     private boolean success;
+    //due to this being response used to check symbols, we map symbols to String, not to CurrencySymbol
     private Map<String, String> symbols;
 
 

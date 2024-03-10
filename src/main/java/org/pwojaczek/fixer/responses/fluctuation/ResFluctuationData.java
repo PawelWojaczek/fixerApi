@@ -1,4 +1,4 @@
-package org.pwojaczek.fixer.responses.timeseries;
+package org.pwojaczek.fixer.responses.fluctuation;
 
 import com.google.gson.annotations.SerializedName;
 import org.pwojaczek.enums.CurrencySymbol;
@@ -8,22 +8,22 @@ import org.pwojaczek.fixer.responses.interfaces.ResGenericTimeFrame;
 import java.time.LocalDate;
 import java.util.Map;
 
-public class ResTimeseriesData implements ResGenericBase, ResGenericTimeFrame {
+public class ResFluctuationData implements ResGenericBase, ResGenericTimeFrame {
     private boolean success;
-    private boolean timeseries;
+    private boolean fluctuation;
     @SerializedName("start_date")
     private LocalDate startDate;
     @SerializedName("end_date")
     private LocalDate endDate;
     private String base;
-    private Map<LocalDate, Map<CurrencySymbol, Double>> rates;
+    private Map<CurrencySymbol, CurrencyFluctuationData> rates;
 
     public boolean isSuccess() {
         return success;
     }
 
-    public boolean isTimeseries() {
-        return timeseries;
+    public boolean isFluctuation() {
+        return fluctuation;
     }
 
     public LocalDate getStartDate() {
@@ -34,11 +34,12 @@ public class ResTimeseriesData implements ResGenericBase, ResGenericTimeFrame {
         return endDate;
     }
 
+    @Override
     public String getBase() {
         return base;
     }
 
-    public Map<LocalDate, Map<CurrencySymbol, Double>> getRates() {
+    public Map<CurrencySymbol, CurrencyFluctuationData> getRates() {
         return rates;
     }
 }
