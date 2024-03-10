@@ -37,3 +37,20 @@ Feature: Fixer API - security features
       | /symbols     | GET    |
       | /timeseries  | GET    |
       | /2023-12-31  | GET    |
+
+  Scenario Outline: Authorized user tries to make invalid requests
+    Given I am authorized user
+    And Endpoint is "<endpoint>"
+    When I send "<method>" request
+    Then Status code is <status_code>
+    And Response message equals "<message>"
+
+    Examples:
+      | endpoint     | method | status_code | message                            |
+      | /convert     | POST   | 403         | You cannot consume this service    |
+      | /fluctuation | POST   | 403         | You cannot consume this service    |
+      | /symbols     | POST   | 403         | You cannot consume this service    |
+      | /fluctuation | POST   | 403         | You cannot consume this service    |
+      | /timeseries  | POST   | 403         | You cannot consume this service    |
+      | /2023-12-31  | POST   | 403         | You cannot consume this service    |
+      | /            | GET    | 404         | no Route matched with those values |

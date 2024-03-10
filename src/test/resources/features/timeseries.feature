@@ -21,18 +21,6 @@ Feature: Fixer API - timeseries endpoint feature
       | 2023-01-01 | 2023-12-31 | GBP,USD | PLN  |
       | 2022-12-31 | 2023-01-01 | JPY,AMD | EUR  |
 
-  Scenario Outline: Authorized user tries to make invalid requests
-    Given Dates: <start_date> and <end_date> are specified
-    And Endpoint is "<endpoint>"
-    When I send "<method>" request
-    Then Status code is <status_code>
-    And Response message equals "<message>"
-
-    Examples:
-      | start_date | end_date   | endpoint    | method | status_code | message                            |
-      | 2023-12-31 | 2023-12-31 | /timeseries | POST   | 403         | You cannot consume this service    |
-      | 2023-12-31 | 2023-12-31 | /           | GET    | 404         | no Route matched with those values |
-
   Scenario Outline: Authorized user tries to make requests with invalid data
     Given Dates: <start_date> and <end_date> are specified
     And Currencies "<symbols>" are specified
