@@ -7,9 +7,9 @@ import io.cucumber.java.en.Then;
 import org.junit.jupiter.api.Assertions;
 import org.junit.platform.commons.util.StringUtils;
 import org.pwojaczek.enums.CurrencySymbol;
-import org.pwojaczek.fixer.responses.ResFixerData;
 import org.pwojaczek.fixer.responses.ResFixerError;
 import org.pwojaczek.fixer.responses.objects.FixerErrorDetails;
+import org.pwojaczek.fixer.responses.timeseries.ResTimeseriesData;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -57,7 +57,7 @@ public class TimeseriesSteps extends StepsBase {
 
     @Then("Response contains data for dates between {date} and {date}")
     public void responseContainsDataForSpecifiedDates(LocalDate startDate, LocalDate endDate) {
-        ResFixerData fixerData = getResponse().as(ResFixerData.class);
+        ResTimeseriesData fixerData = getResponse().as(ResTimeseriesData.class);
         Assertions.assertEquals(fixerData.getStartDate(), startDate);
         Assertions.assertEquals(fixerData.getEndDate(), endDate);
     }
@@ -67,7 +67,7 @@ public class TimeseriesSteps extends StepsBase {
     public void responseHasOnlyDataForCurrencySpecified(String currencies) {
         List<String> currencyList = Arrays.stream(currencies.split(",")).toList();
         List<CurrencySymbol> symbolList = currencyList.stream().map(CurrencySymbol::valueOf).toList();
-        ResFixerData fixerData = getResponse().as(ResFixerData.class);
+        ResTimeseriesData fixerData = getResponse().as(ResTimeseriesData.class);
         fixerData.getRates().forEach((date, rates) -> {
             Assertions.assertEquals(rates.size(), symbolList.size());
             Assertions.assertEquals(symbolList, rates.keySet().stream().toList());
@@ -76,7 +76,7 @@ public class TimeseriesSteps extends StepsBase {
 
     @Then("Response has base currency converted to {string}")
     public void responseHasBaseCurrencyConvertedToBase(String baseCurrency) {
-        Assertions.assertEquals(getResponse().as(ResFixerData.class).getBase().toString(), baseCurrency);
+        Assertions.assertEquals(getResponse().as(ResTimeseriesData.class).getBase().toString(), baseCurrency);
     }
 
     @Then("Response is failed, error code is {int}, type is {string} and info is {string}")
