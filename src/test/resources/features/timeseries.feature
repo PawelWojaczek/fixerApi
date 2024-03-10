@@ -3,6 +3,7 @@ Feature: Fixer API - timeseries endpoint feature
   Background: User has proper authorization
     Given I am authorized user
     And Endpoint is "/timeseries"
+    And Response class is "timeseries.ResTimeseriesData"
 
   Scenario Outline: Authorized user is able to retrieve data for specified currency and base currency
     Given Dates: <start_date> and <end_date> are specified
@@ -12,7 +13,7 @@ Feature: Fixer API - timeseries endpoint feature
     Then Status code is 200
     And Response contains data for dates between <start_date> and <end_date>
     And Response has base currency converted to "<base>"
-    And Response has only data for currencies "<symbols>"
+    And Response contains data for specified date frame and currencies "<symbols>"
 
     Examples:
       | start_date | end_date   | symbols | base |

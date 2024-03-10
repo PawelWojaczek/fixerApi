@@ -24,6 +24,7 @@ public class TestContext {
 
     private RequestSpecification requestSpecification;
     private Response response;
+    private Class responseClass;
 
     private static ObjectMapperConfig createMapperConfig() {
         return new ObjectMapperConfig(ObjectMapperType.GSON)
@@ -70,5 +71,11 @@ public class TestContext {
         return properties.getProperty(property);
     }
 
+    public void setResponseClass(Class responseClass) {
+        this.responseClass = responseClass;
+    }
 
+    public Class getResponseClass() {
+        return responseClass;
+    }
 }
