@@ -13,8 +13,8 @@ import java.time.format.DateTimeFormatter;
 
 public class CommonSteps extends StepsBase {
 
-    private static final String API_KEY = "";
-    private static final String API_KEY_RATE_LIMITED = "";
+    private static final String API_KEY = TestContext.getProperty("api_key");
+    private static final String API_KEY_RATE_LIMITED = TestContext.getProperty("api_key_rate_limited");
 
     public CommonSteps(TestContext testContext) {
         super(testContext);
