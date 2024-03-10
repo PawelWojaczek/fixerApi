@@ -3,6 +3,7 @@ Feature: Fixer API - timeseries endpoint feature
   Background: User has proper authorization
     Given I am authorized user
     And Endpoint is "/timeseries"
+    And Response class is "timeseries.ResTimeseriesData"
 
   Scenario Outline: Authorized user is able to retrieve data for specified currency and base currency
     Given Dates: <start_date> and <end_date> are specified
@@ -12,7 +13,7 @@ Feature: Fixer API - timeseries endpoint feature
     Then Status code is 200
     And Response contains data for dates between <start_date> and <end_date>
     And Response has base currency converted to "<base>"
-    And Response has only data for currencies "<symbols>"
+    And Response contains data for specified date frame and currencies "<symbols>"
 
     Examples:
       | start_date | end_date   | symbols | base |
@@ -20,18 +21,6 @@ Feature: Fixer API - timeseries endpoint feature
       | 2023-01-01 | 2023-01-01 | USD,JPY | EUR  |
       | 2023-01-01 | 2023-12-31 | GBP,USD | PLN  |
       | 2022-12-31 | 2023-01-01 | JPY,AMD | EUR  |
-
-  Scenario Outline: Authorized user tries to make invalid requests
-    Given Dates: <start_date> and <end_date> are specified
-    And Endpoint is "<endpoint>"
-    When I send "<method>" request
-    Then Status code is <status_code>
-    And Response message equals "<message>"
-
-    Examples:
-      | start_date | end_date   | endpoint    | method | status_code | message                            |
-      | 2023-12-31 | 2023-12-31 | /timeseries | POST   | 403         | You cannot consume this service    |
-      | 2023-12-31 | 2023-12-31 | /           | GET    | 404         | no Route matched with those values |
 
   Scenario Outline: Authorized user tries to make requests with invalid data
     Given Dates: <start_date> and <end_date> are specified

@@ -2,18 +2,19 @@ package org.pwojaczek.fixer.responses.timeseries;
 
 import com.google.gson.annotations.SerializedName;
 import org.pwojaczek.enums.CurrencySymbol;
+import org.pwojaczek.fixer.responses.interfaces.ResGenericBase;
 
 import java.time.LocalDate;
 import java.util.Map;
 
-public class ResTimeseriesData {
+public class ResTimeseriesData implements ResGenericBase {
     private boolean success;
     private boolean timeseries;
     @SerializedName("start_date")
     private LocalDate startDate;
     @SerializedName("end_date")
     private LocalDate endDate;
-    private CurrencySymbol base;
+    private String base;
     private Map<LocalDate, Map<CurrencySymbol, Double>> rates;
 
     public boolean isSuccess() {
@@ -32,7 +33,7 @@ public class ResTimeseriesData {
         return endDate;
     }
 
-    public CurrencySymbol getBase() {
+    public String getBase() {
         return base;
     }
 

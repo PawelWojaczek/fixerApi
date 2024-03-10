@@ -3,6 +3,7 @@ Feature: Fixer API - symbols endpoint feature
   Background: User has proper authorization
     Given I am authorized user
     And Endpoint is "/symbols"
+    And Response class is "symbols.ResSymbolsData"
 
   Scenario: Authorized user is able to retrieve data for symbols
     When I send "GET" request

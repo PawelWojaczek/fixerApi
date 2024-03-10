@@ -18,4 +18,8 @@ public class StepsBase {
     public RequestSpecification getRequestSpecification() {
         return testContext.getRequestSpecification();
     }
+
+    protected <T> T getResponseObject() {
+        return (T) getResponse().as(testContext.getResponseClass());
+    }
 }

@@ -16,7 +16,7 @@ public class SymbolsSteps extends StepsBase {
 
     @Then("Response contains every symbol data")
     public void responseContainsEverySymbolData() {
-        ResSymbolsData resSymbolsData = getResponse().as(ResSymbolsData.class);
+        ResSymbolsData resSymbolsData = getResponseObject();
         resSymbolsData.getSymbols().forEach((key, value) -> {
             Assertions.assertTrue(EnumUtils.isValidEnum(CurrencySymbol.class, key), "No currency found in enums: " + key);
         });
